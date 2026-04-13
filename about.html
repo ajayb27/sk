@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — KNSR Consumer Products</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ── ABOUT PAGE STYLES ── */
+  .page-hero { background: var(--ink); padding: 10rem 5% 5rem; position: relative; overflow: hidden; }
+  .page-hero-bg { position:absolute; inset:0; background-image: linear-gradient(rgba(249,115,22,0.05) 1px,transparent 1px), linear-gradient(90deg,rgba(249,115,22,0.05) 1px,transparent 1px); background-size: 64px 64px; }
+  .page-hero-blob-1 { position:absolute; width:500px; height:500px; background:var(--saffron); border-radius:50%; filter:blur(90px); opacity:0.12; top:-150px; right:-100px; }
+  .page-hero-blob-2 { position:absolute; width:300px; height:300px; background:var(--emerald); border-radius:50%; filter:blur(70px); opacity:0.1; bottom:-80px; left:10%; }
+  .page-hero-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto; }
+  .page-hero-tag { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.35); color:var(--saffron); padding:0.4rem 1rem; border-radius:100px; font-size:0.82rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:1.5rem; }
+  .page-hero h1 { font-size: var(--fs-hero); color:#fff; font-weight:800; margin-bottom:1.2rem; }
+  .page-hero h1 .em { color:var(--saffron); }
+  .page-hero p { font-size:1.2rem; color:rgba(255,255,255,0.62); font-weight:300; max-width:600px; line-height:1.75; }
+
+  /* STORY SECTION */
+  #story { background: var(--white); }
+  .story-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; }
+  .story-text h2 { font-size: var(--fs-h2); margin-bottom:1.5rem; }
+  .story-text p { font-size:1rem; color:var(--slate); line-height:1.85; margin-bottom:1.25rem; }
+  .story-text p strong { color:var(--ink); font-weight:600; }
+  .story-pull { font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:700; color:var(--saffron); line-height:1.4; border-left:4px solid var(--saffron); padding-left:1.5rem; margin:2.5rem 0; }
+  .story-visual { position:sticky; top:120px; }
+  .timeline { display:flex; flex-direction:column; gap:0; }
+  .tl-item { display:flex; gap:1.5rem; padding-bottom:2.2rem; position:relative; }
+  .tl-item:last-child { padding-bottom:0; }
+  .tl-left { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+  .tl-dot { width:44px; height:44px; border-radius:50%; background:var(--ink); border:3px solid var(--saffron); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:0.8rem; font-weight:800; color:var(--saffron); flex-shrink:0; }
+  .tl-line { width:2px; flex:1; background:var(--slate-light); margin-top:4px; }
+  .tl-item:last-child .tl-line { display:none; }
+  .tl-right { padding-top:0.5rem; }
+  .tl-year { font-size:0.78rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--saffron); margin-bottom:0.3rem; }
+  .tl-right h4 { font-size:1.05rem; margin-bottom:0.4rem; }
+  .tl-right p { font-size:0.88rem; color:var(--slate); line-height:1.65; }
+
+  /* VISION / MISSION */
+  #vision { background: var(--ink); }
+  .vm-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:2rem; margin-top:3.5rem; }
+  .vm-card { border-radius:var(--radius); padding:2.5rem; position:relative; overflow:hidden; }
+  .vm-card-vision { background: linear-gradient(135deg, #1C2340 0%, #0D1B3E 100%); border:1px solid rgba(249,115,22,0.2); }
+  .vm-card-mission { background: linear-gradient(135deg, #0D2818 0%, #0A1E14 100%); border:1px solid rgba(16,185,129,0.2); }
+  .vm-card-values { background: linear-gradient(135deg, #1A1200 0%, #0F0C00 100%); border:1px solid rgba(252,211,77,0.2); }
+  .vm-card-icon { font-size:2.5rem; margin-bottom:1.25rem; }
+  .vm-card-label { font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.75rem; }
+  .vm-card-vision .vm-card-label { color:var(--saffron); }
+  .vm-card-mission .vm-card-label { color:var(--emerald); }
+  .vm-card-values .vm-card-label { color:var(--accent-yellow); }
+  .vm-card h3 { font-size:1.3rem; color:#fff; margin-bottom:0.75rem; }
+  .vm-card p { font-size:0.9rem; color:rgba(255,255,255,0.55); line-height:1.75; }
+
+  /* VALUES */
+  #values { background: var(--surface); }
+  .values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:3.5rem; }
+  .value-card { background:var(--white); border:1px solid var(--slate-light); border-radius:var(--radius); padding:2rem; transition:all 0.28s; }
+  .value-card:hover { border-color:var(--saffron); transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+  .value-num { font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; color:var(--slate-light); line-height:1; margin-bottom:0.75rem; transition:color 0.22s; }
+  .value-card:hover .value-num { color:var(--saffron); }
+  .value-card h4 { font-size:1.1rem; margin-bottom:0.5rem; }
+  .value-card p { font-size:0.88rem; color:var(--slate); line-height:1.7; }
+
+  /* TEAM */
+  #leadership { background: var(--white); }
+  .team-intro { max-width:640px; margin-bottom:4rem; }
+  .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:2rem; }
+  .team-card { background:var(--surface); border:1px solid var(--slate-light); border-radius:var(--radius); padding:2rem; text-align:center; transition:all 0.28s; }
+  .team-card:hover { border-color:var(--saffron); transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+  .team-avatar { width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; margin:0 auto 1.25rem; }
+  .avatar-a { background:linear-gradient(135deg,var(--saffron),var(--saffron-deep)); color:var(--ink); }
+  .avatar-b { background:linear-gradient(135deg,var(--emerald),#059669); color:#fff; }
+  .avatar-c { background:linear-gradient(135deg,#3B82F6,#1D4ED8); color:#fff; }
+  .avatar-d { background:linear-gradient(135deg,#8B5CF6,#6D28D9); color:#fff; }
+  .team-card h4 { font-size:1.05rem; margin-bottom:0.25rem; }
+  .team-card .role { font-size:0.82rem; font-weight:600; color:var(--saffron); margin-bottom:0.75rem; }
+  .team-card p { font-size:0.85rem; color:var(--slate); line-height:1.65; }
+
+  /* DIFF */
+  #differentiation { background: var(--ink); }
+  #differentiation .section-title { color:#fff; }
+  #differentiation .section-lead { color:rgba(255,255,255,0.55); }
+  .diff-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-top:4rem; align-items:start; }
+  .diff-vs-card { border-radius:var(--radius); padding:2.5rem; }
+  .diff-vs-card.us { background:rgba(249,115,22,0.08); border:1px solid rgba(249,115,22,0.25); }
+  .diff-vs-card.them { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); }
+  .diff-vs-label { font-size:0.78rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1.25rem; }
+  .diff-vs-card.us .diff-vs-label { color:var(--saffron); }
+  .diff-vs-card.them .diff-vs-label { color:rgba(255,255,255,0.35); }
+  .diff-vs-card h3 { font-size:1.4rem; color:#fff; margin-bottom:1.25rem; }
+  .diff-row { display:flex; align-items:flex-start; gap:0.9rem; margin-bottom:1rem; font-size:0.92rem; }
+  .diff-row p { color:rgba(255,255,255,0.65); line-height:1.6; }
+  .diff-row-icon { font-size:1.1rem; flex-shrink:0; margin-top:0.1rem; }
+
+  @media (max-width:900px) {
+    .story-grid { grid-template-columns:1fr; gap:3rem; }
+    .story-visual { position:static; }
+    .vm-grid { grid-template-columns:1fr; }
+    .diff-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">KN<span>S</span>R</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="partners.html">Partner</a></li>
+    <li><a href="insights.html">Insights</a></li>
+    <li><a href="mailto:partner@knsrconsumer.com" class="nav-cta">Apply Now</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ PAGE HERO ═══ -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-blob-1"></div>
+  <div class="page-hero-blob-2"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">Our Story</div>
+    <h1>We're Rebuilding India's <span class="em">FMCG Supply Chain</span> from the Ground Up</h1>
+    <p>A lean, marketing-led B2B marketplace built by entrepreneurs, for entrepreneurs — designed to put the neighbourhood store at the center of modern commerce.</p>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-bar-label">Operating across</span>
+  <div class="trust-items">
+    <span class="trust-item">Karnataka</span>
+    <span class="trust-item">Maharashtra</span>
+    <span class="trust-item">Telangana</span>
+    <span class="trust-item">Tamil Nadu</span>
+    <span class="trust-item">Gujarat</span>
+    <span class="trust-item">Rajasthan</span>
+  </div>
+</div>
+
+<!-- ═══ STORY ═══ -->
+<section id="story">
+  <div class="section-inner">
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <span class="section-tag">The Origin</span>
+        <h2 class="section-title">Built Out of <span class="em">Frustration</span></h2>
+        <p>KNSR was born from a simple observation: India's 12 million kirana stores — the backbone of consumer retail — had no reliable, tech-enabled access to the brands and products they needed. Their supply chains were fragmented, opaque, and controlled by layers of middlemen who extracted value at every step.</p>
+        <p>Meanwhile, well-funded B2B FMCG platforms were racing to solve this by replicating the exact same asset-heavy, warehouse-first model that had always failed at scale. <strong>We chose a different path.</strong></p>
+        <div class="story-pull">"The future of Indian retail isn't a giant warehouse — it's a network of empowered local entrepreneurs."</div>
+        <p>KNSR was designed from day one as a marketing-led, partner-operated marketplace. Instead of building warehouses before building demand, we recruit, train, and support local partners to run KNSR-branded dark stores in their own catchment zones. They bring the local knowledge, the relationships, and the hustle. We bring the brand catalogue, the technology, and the operational playbook.</p>
+        <p>The result is a network that scales faster, costs less, and creates real entrepreneurial wealth in the communities it serves — not just returns for venture capital investors thousands of miles away.</p>
+      </div>
+      <div class="story-visual reveal reveal-delay-1">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot">23</div><div class="tl-line"></div></div>
+            <div class="tl-right">
+              <div class="tl-year">2023 — Founding</div>
+              <h4>KNSR Consumer Products Pvt Ltd Incorporated</h4>
+              <p>Founded in Bengaluru with a seed team of FMCG, logistics, and technology veterans. First 3 partner nodes launched in Karnataka.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot">24</div><div class="tl-line"></div></div>
+            <div class="tl-right">
+              <div class="tl-year">2024 — Expansion</div>
+              <h4>Multi-State Rollout &amp; Platform Launch</h4>
+              <p>Expanded to Maharashtra and Telangana. Launched proprietary order management platform. Crossed 50 active partner nodes and ₹10Cr cumulative GMV.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot">25</div><div class="tl-line"></div></div>
+            <div class="tl-right">
+              <div class="tl-year">2025 — Scale</div>
+              <h4>Pan-India Vision, 147 Active Nodes</h4>
+              <p>Operating across 6 states with 147 partner nodes. Serving 10,000+ kirana outlets, HoReCa operators, and institutional buyers. Building towards 500 nodes by end of year.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot">→</div></div>
+            <div class="tl-right">
+              <div class="tl-year">Next — Bharat Scale</div>
+              <h4>1,000 Nodes. 50,000 Outlets. Every State.</h4>
+              <p>KNSR's roadmap targets full pan-India coverage across Tier 1, 2, and 3 cities — building the most trusted B2B FMCG network in the country.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VISION / MISSION ═══ -->
+<section id="vision">
+  <div class="section-inner">
+    <div style="text-align:center; max-width:640px; margin:0 auto;">
+      <span class="section-tag">Purpose &amp; Direction</span>
+      <h2 class="section-title" style="color:#fff;">What We Stand <span class="em">For</span></h2>
+    </div>
+    <div class="vm-grid">
+      <div class="vm-card vm-card-vision reveal">
+        <div class="vm-card-icon">🔭</div>
+        <div class="vm-card-label">Vision</div>
+        <h3>India's Most Trusted B2B Consumer Products Network</h3>
+        <p>To become the backbone of FMCG distribution across Tier 1, 2, and 3 India — enabling every kirana, every hotel kitchen, and every institution to buy smarter, faster, and more profitably than ever before.</p>
+      </div>
+      <div class="vm-card vm-card-mission reveal reveal-delay-1">
+        <div class="vm-card-icon">🎯</div>
+        <div class="vm-card-label">Mission</div>
+        <h3>Empower Entrepreneurs. Eliminate Middlemen. Deliver Value.</h3>
+        <p>KNSR exists to democratize access to FMCG supply chains. By arming local partners with technology, brand relationships, and operational playbooks, we remove the friction that has long held India's retail infrastructure back.</p>
+      </div>
+      <div class="vm-card vm-card-values reveal reveal-delay-2">
+        <div class="vm-card-icon">⭐</div>
+        <div class="vm-card-label">Core Values</div>
+        <h3>Lean. Local. Honest. Fast.</h3>
+        <p>We operate lean — no vanity metrics, no bloated teams. We stay local — our partners know their markets better than any algorithm. We are honest — with partners, buyers, and brands. And we move fast — because in FMCG, speed is a competitive moat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VALUES ═══ -->
+<section id="values">
+  <div class="section-inner">
+    <span class="section-tag">Our Principles</span>
+    <h2 class="section-title">How We <span class="em">Work</span></h2>
+    <p class="section-lead">Six principles that guide every product decision, partner interaction, and business call we make.</p>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-num">01</div>
+        <h4>Partner Success = Our Success</h4>
+        <p>We only grow when our partners grow. Every internal decision is evaluated through the lens of partner outcomes — not just platform metrics.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-num">02</div>
+        <h4>Demand Before Supply</h4>
+        <p>We build demand before we build infrastructure. No warehouse exists without validated market need behind it.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-num">03</div>
+        <h4>Radical Transparency</h4>
+        <p>Partners see the same data we do. Buyers know exactly what they're paying for. Brands understand exactly where their products land.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">04</div>
+        <h4>Operationally Excellent</h4>
+        <p>Below 1% returns. Above 97% fulfillment rates. We hold our network to standards that most B2B platforms can't imagine achieving at our price points.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-num">05</div>
+        <h4>Community Over Capital</h4>
+        <p>We're building a network that creates entrepreneurial wealth at the local level — not just financial returns for distant investors.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-num">06</div>
+        <h4>Always Learning</h4>
+        <p>India's retail landscape is evolving fast. We stay curious, test constantly, and treat every partner node as a real-world laboratory.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEADERSHIP ═══ -->
+<section id="leadership">
+  <div class="section-inner">
+    <div class="team-intro reveal">
+      <span class="section-tag">The Team</span>
+      <h2 class="section-title">Built by People Who <span class="em">Know the Field</span></h2>
+      <p class="section-lead">Our leadership team brings together decades of experience across FMCG distribution, supply chain technology, and consumer retail operations.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar avatar-a">RK</div>
+        <h4>Rajesh Kumar</h4>
+        <div class="role">Founder &amp; CEO</div>
+        <p>15 years in FMCG distribution across South India. Previously scaled a regional wholesale network to ₹200Cr+ before building KNSR.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-1">
+        <div class="team-avatar avatar-b">SP</div>
+        <h4>Sunita Pillai</h4>
+        <div class="role">Chief Operations Officer</div>
+        <p>Ex-Marico and Big Basket. Supply chain architect who designed the dark store model that powers every KNSR partner node.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-2">
+        <div class="team-avatar avatar-c">AM</div>
+        <h4>Arjun Mehta</h4>
+        <div class="role">Chief Technology Officer</div>
+        <p>Previously at Ninjacart and Udaan. Built KNSR's real-time order management, inventory, and partner intelligence platforms from scratch.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-3">
+        <div class="team-avatar avatar-d">PD</div>
+        <h4>Priya Desai</h4>
+        <div class="role">Head of Partner Growth</div>
+        <p>Franchise and partner network specialist who has onboarded and scaled 120+ KNSR nodes across six states in under 18 months.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DIFFERENTIATION ═══ -->
+<section id="differentiation">
+  <div class="section-inner">
+    <span class="section-tag">Why KNSR</span>
+    <h2 class="section-title" style="color:#fff;">Lean &amp; Marketing-Led vs. <span class="em">Capital-Heavy</span></h2>
+    <p class="section-lead" style="color:rgba(255,255,255,0.55);">Most B2B FMCG platforms raised hundreds of crores to build warehouses before building markets. KNSR took the opposite bet — and it's paying off.</p>
+    <div class="diff-grid">
+      <div class="diff-vs-card us reveal">
+        <div class="diff-vs-label">The KNSR Way</div>
+        <h3>Marketing-Led. Partner-Run. Profit-First.</h3>
+        <div class="diff-row"><div class="diff-row-icon">✅</div><p><strong style="color:#fff;">Demand before supply</strong> — we validate market demand before deploying a single rupee of infrastructure.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">✅</div><p><strong style="color:#fff;">Partner-operated nodes</strong> — local entrepreneurs run the last mile, bringing unmatched community knowledge.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">✅</div><p><strong style="color:#fff;">Asset-light model</strong> — low fixed costs mean faster breakeven and resilience through market cycles.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">✅</div><p><strong style="color:#fff;">Unit economics from day one</strong> — every node is evaluated for profitability before scaling.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">✅</div><p><strong style="color:#fff;">Community wealth creation</strong> — partners earn real livelihoods, not just app commissions.</p></div>
+      </div>
+      <div class="diff-vs-card them reveal reveal-delay-1">
+        <div class="diff-vs-label">The Old Playbook</div>
+        <h3 style="color:rgba(255,255,255,0.5);">VC-Funded. Warehouse-First. Burn-Heavy.</h3>
+        <div class="diff-row"><div class="diff-row-icon">❌</div><p>Build giant central warehouses first, then try to generate enough demand to justify them.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">❌</div><p>Company-operated last mile creates massive fixed cost structures that bleed cash at scale.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">❌</div><p>Heavy capex requirements demand constant venture capital raises to stay solvent.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">❌</div><p>Growth driven by subsidies and discounting — not genuine unit economics or value delivery.</p></div>
+        <div class="diff-row"><div class="diff-row-icon">❌</div><p>Value captured by platforms and investors — local operators become low-margin vendors, not partners.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="reveal">Ready to Join the Network?</h2>
+    <p class="reveal reveal-delay-1">Whether you want to run a KNSR node, list your FMCG brand, or buy at scale — we're building this for you.</p>
+    <div class="cta-actions reveal reveal-delay-2">
+      <a href="mailto:partner@knsrconsumer.com" class="btn-dark">Become a Partner ↗</a>
+      <a href="products.html" class="btn-outline-dark">Explore Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo">KN<span>S</span>R</a>
+      <p>KNSR Consumer Products Pvt Ltd is India's full-stack B2B FMCG marketplace, connecting brands, distributors, and manufacturers directly to kirana stores, HoReCa operators, and institutional buyers.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="partners.html">Partner Program</a></li>
+        <li><a href="insights.html">Blog &amp; Insights</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Partners</h5>
+      <ul class="footer-links">
+        <li><a href="#">Become a Node Partner</a></li>
+        <li><a href="#">For FMCG Brands</a></li>
+        <li><a href="#">For Distributors</a></li>
+        <li><a href="#">For Kirana Stores</a></li>
+        <li><a href="#">For HoReCa</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul class="footer-links">
+        <li><a href="mailto:hello@knsrconsumer.com">hello@knsrconsumer.com</a></li>
+        <li><a href="mailto:partner@knsrconsumer.com">partner@knsrconsumer.com</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">WhatsApp Channel</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 KNSR Consumer Products Pvt Ltd. All rights reserved.</span>
+    <span>
+      <a href="#" style="margin-right:1.5rem; color:rgba(255,255,255,0.35);">Privacy Policy</a>
+      <a href="#" style="color:rgba(255,255,255,0.35);">Terms of Use</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => obs.observe(el));
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.borderBottomColor = scrollY > 40 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)';
+  });
+</script>
+</body>
+</html>

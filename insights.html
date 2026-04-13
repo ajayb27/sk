@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — KNSR Consumer Products</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+
+<style>
+/* HERO */
+.page-hero {
+  background: var(--ink);
+  padding: 10rem 5% 5rem;
+}
+.page-hero h1 {
+  font-size: var(--fs-hero);
+  color:#fff;
+  font-weight:800;
+}
+.page-hero p {
+  color:rgba(255,255,255,0.6);
+  font-size:1.2rem;
+  max-width:600px;
+  margin-top:1rem;
+}
+
+/* FEATURED */
+.featured {
+  background: var(--white);
+}
+.featured-card {
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:2rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding:2rem;
+  border:1px solid var(--slate-light);
+}
+.featured-img {
+  background: linear-gradient(135deg,#FED7AA,#FCD34D);
+  border-radius: var(--radius);
+  height:260px;
+}
+.featured h3 {
+  font-size:1.5rem;
+  margin-bottom:0.5rem;
+}
+.featured p {
+  color:var(--slate);
+  font-size:0.95rem;
+}
+
+/* GRID */
+.blog-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.5rem;
+  margin-top:3rem;
+}
+.blog-card {
+  background:var(--white);
+  border:1px solid var(--slate-light);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  transition:0.25s;
+}
+.blog-card:hover {
+  transform:translateY(-5px);
+  border-color:var(--saffron);
+  box-shadow:var(--shadow);
+}
+.blog-card h4 {
+  font-size:1rem;
+  margin-bottom:0.4rem;
+}
+.blog-card p {
+  font-size:0.85rem;
+  color:var(--slate);
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <a href="index.html" class="nav-logo">KN<span>S</span>R</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="partners.html">Partner</a></li>
+    <li><a href="insights.html" class="active">Insights</a></li>
+    <li><a href="mailto:partner@knsrconsumer.com" class="nav-cta">Apply Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<div class="page-hero">
+  <div class="section-inner">
+    <h1>Insights & <span class="em">Market Intelligence</span></h1>
+    <p>Stay ahead with trends, strategies, and actionable insights for FMCG businesses.</p>
+  </div>
+</div>
+
+<!-- FEATURED -->
+
+<section class="featured">
+  <div class="section-inner">
+    <span class="section-tag">Featured</span>
+    <div class="featured-card">
+      <div class="featured-img"></div>
+      <div>
+        <h3>How FMCG Distribution is Changing in India</h3>
+        <p>Discover how technology, supply chain innovation, and B2B platforms are transforming traditional distribution models.</p>
+        <br>
+        <a href="#" class="btn-primary">Read Article</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG GRID -->
+
+<section>
+  <div class="section-inner">
+    <span class="section-tag">Latest Articles</span>
+    <h2 class="section-title">Explore <span class="em">Insights</span></h2>
+
+```
+<div class="blog-grid">
+  <div class="blog-card">
+    <h4>Top FMCG Trends in 2026</h4>
+    <p>What retailers and distributors should watch out for.</p>
+  </div>
+  <div class="blog-card">
+    <h4>Improving Retail Margins</h4>
+    <p>Smart strategies to increase profitability.</p>
+  </div>
+  <div class="blog-card">
+    <h4>Supply Chain Optimization</h4>
+    <p>Reduce costs and improve delivery efficiency.</p>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+</body>
+</html>

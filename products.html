@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — KNSR Consumer Products</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ── PRODUCTS PAGE STYLES ── */
+  .page-hero { background: var(--ink); padding: 10rem 5% 5rem; position: relative; overflow: hidden; }
+  .page-hero-bg { position:absolute; inset:0; background-image: linear-gradient(rgba(249,115,22,0.05) 1px,transparent 1px), linear-gradient(90deg,rgba(249,115,22,0.05) 1px,transparent 1px); background-size: 64px 64px; }
+  .page-hero-blob-1 { position:absolute; width:500px; height:500px; background:var(--emerald); border-radius:50%; filter:blur(90px); opacity:0.1; top:-120px; right:-80px; }
+  .page-hero-blob-2 { position:absolute; width:350px; height:350px; background:var(--saffron); border-radius:50%; filter:blur(80px); opacity:0.1; bottom:-60px; left:5%; }
+  .page-hero-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto; }
+  .page-hero-tag { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.35); color:var(--saffron); padding:0.4rem 1rem; border-radius:100px; font-size:0.82rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:1.5rem; }
+  .page-hero h1 { font-size: var(--fs-hero); color:#fff; font-weight:800; margin-bottom:1.2rem; }
+  .page-hero h1 .em { color:var(--saffron); }
+  .page-hero p { font-size:1.2rem; color:rgba(255,255,255,0.62); font-weight:300; max-width:600px; line-height:1.75; }
+  .hero-product-stats { display:flex; gap:3rem; flex-wrap:wrap; margin-top:3rem; padding-top:2.5rem; border-top:1px solid rgba(255,255,255,0.08); }
+  .hero-product-stat .num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:#fff; }
+  .hero-product-stat .num span { color:var(--saffron); }
+  .hero-product-stat .lbl { font-size:0.82rem; color:rgba(255,255,255,0.45); margin-top:0.15rem; }
+
+  /* FILTER TABS */
+  #catalogue { background: var(--white); }
+  .filter-bar { display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:3rem; padding-bottom:1.5rem; border-bottom:1px solid var(--slate-light); }
+  .filter-btn { padding:0.6rem 1.4rem; border-radius:100px; font-family:'Syne',sans-serif; font-size:0.88rem; font-weight:600; border:1.5px solid var(--slate-light); background:transparent; color:var(--slate); cursor:pointer; transition:all 0.2s; }
+  .filter-btn:hover { border-color:var(--saffron); color:var(--saffron); }
+  .filter-btn.active { background:var(--saffron); border-color:var(--saffron); color:var(--ink); }
+
+  /* CATEGORY SECTIONS */
+  .category-section { margin-bottom:5rem; }
+  .cat-header { display:flex; align-items:center; gap:1rem; margin-bottom:2rem; padding-bottom:1rem; border-bottom:2px solid var(--slate-light); }
+  .cat-icon-wrap { width:52px; height:52px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0; }
+  .cat-icon-wrap-orange { background:rgba(249,115,22,0.1); }
+  .cat-icon-wrap-green { background:rgba(16,185,129,0.1); }
+  .cat-icon-wrap-blue { background:rgba(59,130,246,0.1); }
+  .cat-icon-wrap-purple { background:rgba(139,92,246,0.1); }
+  .cat-icon-wrap-yellow { background:rgba(252,211,77,0.15); }
+  .cat-icon-wrap-pink { background:rgba(236,72,153,0.1); }
+  .cat-header h3 { font-size:1.4rem; }
+  .cat-header .cat-count { font-size:0.82rem; color:var(--slate); font-weight:500; margin-top:0.2rem; }
+  .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.5rem; }
+  .product-card { background:var(--surface); border:1px solid var(--slate-light); border-radius:var(--radius); overflow:hidden; transition:all 0.28s; position:relative; }
+  .product-card:hover { border-color:var(--saffron); transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+  .product-img { height:160px; display:flex; align-items:center; justify-content:center; font-size:3.5rem; position:relative; }
+  .prod-img-orange { background:linear-gradient(135deg,#FEF3C7,#FED7AA); }
+  .prod-img-green { background:linear-gradient(135deg,#D1FAE5,#A7F3D0); }
+  .prod-img-blue { background:linear-gradient(135deg,#DBEAFE,#BFDBFE); }
+  .prod-img-purple { background:linear-gradient(135deg,#EDE9FE,#DDD6FE); }
+  .prod-img-yellow { background:linear-gradient(135deg,#FEF9C3,#FEF08A); }
+  .prod-img-pink { background:linear-gradient(135deg,#FCE7F3,#FBCFE8); }
+  .prod-img-teal { background:linear-gradient(135deg,#CCFBF1,#99F6E4); }
+  .prod-badge { position:absolute; top:12px; left:12px; font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.65rem; border-radius:100px; }
+  .badge-popular { background:var(--saffron); color:var(--ink); }
+  .badge-new { background:var(--emerald); color:#fff; }
+  .badge-bulk { background:var(--ink); color:#fff; }
+  .product-body { padding:1.25rem; }
+  .product-cat-tag { font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--saffron); margin-bottom:0.4rem; }
+  .product-card h4 { font-size:1rem; margin-bottom:0.35rem; line-height:1.35; transition:color 0.2s; }
+  .product-card:hover h4 { color:var(--saffron); }
+  .product-card p { font-size:0.82rem; color:var(--slate); line-height:1.6; margin-bottom:0.75rem; }
+  .product-footer { display:flex; justify-content:space-between; align-items:center; padding-top:0.75rem; border-top:1px solid var(--slate-light); }
+  .product-moq { font-size:0.78rem; color:var(--slate); }
+  .product-moq strong { color:var(--ink); }
+  .product-cta-link { font-size:0.82rem; font-weight:600; color:var(--saffron); display:flex; align-items:center; gap:0.3rem; transition:gap 0.2s; }
+  .product-card:hover .product-cta-link { gap:0.6rem; }
+
+  /* HOW WE SOURCE */
+  #sourcing { background: var(--ink); }
+  #sourcing .section-title { color:#fff; }
+  #sourcing .section-lead { color:rgba(255,255,255,0.55); }
+  .sourcing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem; margin-top:3.5rem; }
+  .sourcing-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem; transition:all 0.28s; }
+  .sourcing-card:hover { background:rgba(255,255,255,0.08); border-color:rgba(249,115,22,0.3); transform:translateY(-4px); }
+  .sourcing-icon { font-size:2rem; margin-bottom:1rem; }
+  .sourcing-card h4 { font-size:1.05rem; color:#fff; margin-bottom:0.5rem; }
+  .sourcing-card p { font-size:0.87rem; color:rgba(255,255,255,0.5); line-height:1.7; }
+
+  /* ORDERING */
+  #ordering { background: var(--surface); }
+  .ordering-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; margin-top:3rem; }
+  .ordering-steps { display:flex; flex-direction:column; gap:2rem; }
+  .order-step { display:flex; gap:1.5rem; align-items:flex-start; }
+  .order-step-num { width:48px; height:48px; border-radius:50%; background:var(--saffron); color:var(--ink); font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .order-step-text h4 { font-size:1.05rem; margin-bottom:0.35rem; }
+  .order-step-text p { font-size:0.9rem; color:var(--slate); }
+  .ordering-visual { background:var(--ink); border-radius:var(--radius); padding:2.5rem; position:relative; overflow:hidden; }
+  .ordering-visual::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; background:var(--emerald); border-radius:50%; filter:blur(60px); opacity:0.15; }
+  .ordering-visual h3 { font-size:1.4rem; color:#fff; margin-bottom:0.5rem; }
+  .ordering-visual .sub { font-size:0.88rem; color:rgba(255,255,255,0.4); margin-bottom:2rem; }
+  .order-form-row { margin-bottom:1rem; }
+  .order-form-row label { font-size:0.8rem; font-weight:600; color:rgba(255,255,255,0.5); display:block; margin-bottom:0.4rem; letter-spacing:0.04em; text-transform:uppercase; }
+  .order-form-row input, .order-form-row select { width:100%; padding:0.75rem 1rem; border-radius:var(--radius-sm); background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.92rem; outline:none; transition:border-color 0.2s; }
+  .order-form-row input::placeholder { color:rgba(255,255,255,0.25); }
+  .order-form-row input:focus, .order-form-row select:focus { border-color:var(--saffron); }
+  .order-form-row select option { background: #0A0F1E; }
+  .form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+  /* BRANDS */
+  #brands { background: var(--white); }
+  .brands-intro { max-width:600px; margin-bottom:3.5rem; }
+  .brands-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.25rem; }
+  .brand-tile { background:var(--surface); border:1px solid var(--slate-light); border-radius:var(--radius-sm); padding:1.5rem; text-align:center; transition:all 0.22s; }
+  .brand-tile:hover { border-color:var(--saffron); transform:scale(1.03); box-shadow:var(--shadow); }
+  .brand-tile-icon { font-size:2.2rem; margin-bottom:0.75rem; }
+  .brand-tile h5 { font-size:0.92rem; font-weight:700; margin-bottom:0.2rem; }
+  .brand-tile p { font-size:0.78rem; color:var(--slate); }
+  .brand-category-badge { display:inline-block; font-size:0.7rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; margin-top:0.5rem; }
+  .bcb-fmcg { background:rgba(249,115,22,0.12); color:var(--saffron-deep); }
+  .bcb-food { background:rgba(16,185,129,0.12); color:#065F46; }
+  .bcb-home { background:rgba(59,130,246,0.12); color:#1E40AF; }
+  .bcb-personal { background:rgba(139,92,246,0.12); color:#5B21B6; }
+  .bcb-regional { background:rgba(252,211,77,0.2); color:#78350F; }
+
+  @media (max-width:900px) {
+    .ordering-grid { grid-template-columns:1fr; gap:3rem; }
+    .hero-product-stats { gap:1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">KN<span>S</span>R</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="partners.html">Partner</a></li>
+    <li><a href="insights.html">Insights</a></li>
+    <li><a href="mailto:partner@knsrconsumer.com" class="nav-cta">Apply Now</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ PAGE HERO ═══ -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-blob-1"></div>
+  <div class="page-hero-blob-2"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">Product Catalogue</div>
+    <h1>Everything Your <span class="em">Business Needs</span>,<br>Delivered to Your Door</h1>
+    <p>From daily FMCG essentials to bulk institutional supply — KNSR's B2B catalogue covers 5,000+ SKUs across six major categories, sourced directly from brands, manufacturers, and trusted regional suppliers.</p>
+    <div class="hero-product-stats">
+      <div class="hero-product-stat"><div class="num">5K<span>+</span></div><div class="lbl">Active SKUs</div></div>
+      <div class="hero-product-stat"><div class="num">200<span>+</span></div><div class="lbl">Brand Partners</div></div>
+      <div class="hero-product-stat"><div class="num">6</div><div class="lbl">Product Categories</div></div>
+      <div class="hero-product-stat"><div class="num">48<span>hr</span></div><div class="lbl">Average Delivery</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-bar-label">Delivering to</span>
+  <div class="trust-items">
+    <span class="trust-item">Kirana Stores</span>
+    <span class="trust-item">Supermarkets</span>
+    <span class="trust-item">HoReCa Operators</span>
+    <span class="trust-item">Institutions</span>
+    <span class="trust-item">Bulk Buyers</span>
+  </div>
+</div>
+
+<!-- ═══ CATALOGUE ═══ -->
+<section id="catalogue">
+  <div class="section-inner">
+    <span class="section-tag">Full Catalogue</span>
+    <h2 class="section-title">Browse by <span class="em">Category</span></h2>
+    <p class="section-lead" style="margin-bottom:2.5rem;">All products are available in B2B pack sizes. Minimum order quantities apply per category.</p>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCat(this,'all')">All Categories</button>
+      <button class="filter-btn" onclick="filterCat(this,'personal')">Personal Care</button>
+      <button class="filter-btn" onclick="filterCat(this,'food')">Packaged Foods</button>
+      <button class="filter-btn" onclick="filterCat(this,'home')">Home Care</button>
+      <button class="filter-btn" onclick="filterCat(this,'horeca')">HoReCa Supplies</button>
+      <button class="filter-btn" onclick="filterCat(this,'institutional')">Institutional Bulk</button>
+      <button class="filter-btn" onclick="filterCat(this,'regional')">Regional Brands</button>
+    </div>
+
+    <!-- PERSONAL CARE -->
+    <div class="category-section" data-cat="personal">
+      <div class="cat-header">
+        <div class="cat-icon-wrap cat-icon-wrap-purple">🧴</div>
+        <div><h3>Personal Care</h3><p class="cat-count">800+ SKUs · Soaps, Shampoos, Skincare, Hygiene</p></div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-img prod-img-purple">🧼
+            <div class="prod-badge badge-popular">Popular</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Soaps &amp; Cleansers</div>
+            <h4>Premium Bath Soap Assortment — B2B Case Pack</h4>
+            <p>Includes variants across major national brands. Mixed fragrance case packs available for kirana retail.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Case (48 pcs)</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-img prod-img-purple">🧴</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Hair Care</div>
+            <h4>Shampoo &amp; Conditioner — Trade Pack</h4>
+            <p>All popular variants and sizes. Ideal for kirana stores, supermarket shelves, and salon bulk buying.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Carton (24 units)</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-img prod-img-pink">🪥
+            <div class="prod-badge badge-new">New</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Oral Care</div>
+            <h4>Toothpaste &amp; Toothbrush Combo Packs</h4>
+            <p>Value combo packs designed for kirana counter display and institutional canteen supply.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>2 Dozen</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-img prod-img-pink">🩹</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Hygiene &amp; Sanitation</div>
+            <h4>Feminine Hygiene &amp; Health Products — Bulk</h4>
+            <p>Institutional bulk packs for hostels, hospitals, schools, and large office canteens.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Master Carton</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACKAGED FOODS -->
+    <div class="category-section" data-cat="food">
+      <div class="cat-header">
+        <div class="cat-icon-wrap cat-icon-wrap-orange">🥫</div>
+        <div><h3>Packaged Foods</h3><p class="cat-count">1,500+ SKUs · Staples, Snacks, Beverages, Processed Foods</p></div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-img prod-img-orange">🍪
+            <div class="prod-badge badge-popular">Popular</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Snacks &amp; Biscuits</div>
+            <h4>Biscuits &amp; Cookies Assortment — Multi-Brand Trade Case</h4>
+            <p>High-velocity SKUs across leading national brands. Ideal for kirana retail and canteen bulk.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Pallet (120 units)</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-img prod-img-yellow">🌾</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Staples &amp; Grains</div>
+            <h4>Atta, Rice &amp; Dal — Wholesale B2B Bags</h4>
+            <p>Branded and unbranded staples in 5kg, 10kg, and 25kg wholesale formats.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>50 kg per SKU</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-img prod-img-orange">☕
+            <div class="prod-badge badge-bulk">Bulk</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Tea, Coffee &amp; Beverages</div>
+            <h4>Tea Dust &amp; Premium Leaf — HoReCa &amp; Retail Packs</h4>
+            <p>Leading brands in catering-grade bulk packs. Also available in consumer retail sizes for kirana.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>10 kg</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-img prod-img-teal">🍜</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Instant &amp; Ready Foods</div>
+            <h4>Instant Noodles, Soups &amp; Ready Meals — Trade Cartons</h4>
+            <p>Fast-moving SKUs with strong kirana demand. Available in consumer and foodservice formats.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Carton (12 units)</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME CARE -->
+    <div class="category-section" data-cat="home">
+      <div class="cat-header">
+        <div class="cat-icon-wrap cat-icon-wrap-blue">🏠</div>
+        <div><h3>Home Care</h3><p class="cat-count">600+ SKUs · Detergents, Cleaners, Disinfectants</p></div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-img prod-img-blue">🧺
+            <div class="prod-badge badge-popular">Popular</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Laundry</div>
+            <h4>Washing Powder &amp; Liquid Detergents — B2B Cartons</h4>
+            <p>All leading brands in trade-size cartons. Covers pouches, medium packs, and large institutional formats.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Carton</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-img prod-img-blue">🫧</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Dishwash &amp; Kitchen</div>
+            <h4>Dishwash Bars, Liquids &amp; Scrubbers — Trade Case</h4>
+            <p>Complete dishwash category in one order. Popular for both kirana retail shelf and HoReCa kitchen supply.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Case (24 units)</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-img prod-img-blue">🧹
+            <div class="prod-badge badge-bulk">Bulk</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Floor &amp; Surface Cleaners</div>
+            <h4>Floor Cleaners, Disinfectants &amp; Surface Sprays — Institutional</h4>
+            <p>Hospital, hotel, and institutional-grade surface cleaners in 5L and 20L bulk formats.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>20 L per SKU</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-img prod-img-blue">🪳</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Pest Control &amp; Fresheners</div>
+            <h4>Mosquito Repellents, Air Fresheners &amp; Pest Control</h4>
+            <p>High-demand seasonal and daily-use home care products. Full range across leading national brands.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Carton (24 units)</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HORECA -->
+    <div class="category-section" data-cat="horeca">
+      <div class="cat-header">
+        <div class="cat-icon-wrap cat-icon-wrap-green">🍽️</div>
+        <div><h3>HoReCa Supplies</h3><p class="cat-count">900+ SKUs · Hotels, Restaurants, Cafeterias, Canteens</p></div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-img prod-img-green">🫙
+            <div class="prod-badge badge-popular">Popular</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Oils &amp; Fats</div>
+            <h4>Refined Cooking Oils — Catering Tins &amp; Bulk Cans</h4>
+            <p>Sunflower, soybean, groundnut, and blended oils in 5L, 15L, and 15kg catering-grade packaging.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>5 L per SKU</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-img prod-img-green">🧂</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Condiments &amp; Spices</div>
+            <h4>Spices, Masalas &amp; Condiments — Chef-Grade Bulk</h4>
+            <p>Commercial kitchen-grade spices and sauces in institutional bulk packs. Branded and private label options.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 kg per SKU</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-img prod-img-teal">🥛
+            <div class="prod-badge badge-new">New</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Dairy &amp; Alternatives</div>
+            <h4>UHT Milk, Curd, Ghee &amp; Dairy Products — HoReCa Pack</h4>
+            <p>Long-shelf-life dairy in bulk formats for hotel kitchens, bakeries, and institutional canteens.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>12 units per SKU</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-img prod-img-green">🧻
+            <div class="prod-badge badge-bulk">Bulk</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Disposables &amp; Tissues</div>
+            <h4>Tissue Paper, Napkins &amp; Disposable Tableware — Bulk</h4>
+            <p>Full range of food service disposables in bulk packs. Ideal for restaurants, canteens, and event catering.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Master Carton</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTITUTIONAL -->
+    <div class="category-section" data-cat="institutional">
+      <div class="cat-header">
+        <div class="cat-icon-wrap cat-icon-wrap-yellow">📦</div>
+        <div><h3>Institutional Bulk</h3><p class="cat-count">500+ SKUs · Offices, Hospitals, Schools, Government</p></div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-img prod-img-yellow">🏥
+            <div class="prod-badge badge-bulk">Bulk</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Healthcare &amp; Hygiene</div>
+            <h4>Hand Sanitizers, Gloves &amp; PPE — Institutional</h4>
+            <p>Hospital and institutional supply of hand hygiene and basic PPE products in bulk packs.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Carton</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-img prod-img-yellow">☕</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Office Pantry</div>
+            <h4>Tea, Coffee, Sugar &amp; Pantry Essentials — Office Pack</h4>
+            <p>Complete office pantry supply in one order. Covers beverages, snacks, and daily consumables for offices of all sizes.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>Monthly subscription</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-img prod-img-yellow">🏫</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Educational Institutions</div>
+            <h4>School &amp; Hostel Daily Supplies — Bulk Order</h4>
+            <p>Personal care, hygiene, and pantry products curated for school hostels and student accommodation.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>As per requirement</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-img prod-img-orange">🏛️
+            <div class="prod-badge badge-bulk">Bulk</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Government &amp; PSU</div>
+            <h4>Government Canteen &amp; PSU Bulk Supply Programme</h4>
+            <p>Dedicated programme for government offices, defence canteens, and PSU bulk buyers with consolidated billing.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>Custom quote</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGIONAL BRANDS -->
+    <div class="category-section" data-cat="regional">
+      <div class="cat-header">
+        <div class="cat-icon-wrap cat-icon-wrap-orange">🌾</div>
+        <div><h3>Regional Brands</h3><p class="cat-count">700+ SKUs · Curated Local Manufacturers &amp; Regional Champions</p></div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-img prod-img-orange">🥭
+            <div class="prod-badge badge-new">New</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Regional Foods</div>
+            <h4>South India Regional Snacks &amp; Namkeens — Trade Pack</h4>
+            <p>Curated range of high-quality regional snack brands with strong local following. Exclusive distribution available.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Carton</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-img prod-img-teal">🧃</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Beverages</div>
+            <h4>Regional Juices, Sherbets &amp; Traditional Drinks</h4>
+            <p>Aam panna, kokum, chaas mixes, and regional beverage brands. High demand in local kirana stores.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Case (24 units)</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-img prod-img-yellow">🍯
+            <div class="prod-badge badge-new">New</div>
+          </div>
+          <div class="product-body">
+            <div class="product-cat-tag">Natural &amp; Organic</div>
+            <h4>Regional Honey, Cold-Pressed Oils &amp; Natural Products</h4>
+            <p>Artisanal regional products positioned for premium kirana stores and modern trade buyers.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>12 units per SKU</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-img prod-img-purple">🧴</div>
+          <div class="product-body">
+            <div class="product-cat-tag">Regional Personal Care</div>
+            <h4>Ayurvedic &amp; Herbal Personal Care — Regional Brands</h4>
+            <p>Neem, tulsi, and herbal formulations from regional manufacturers. Growing demand in Tier-2 and Tier-3 markets.</p>
+            <div class="product-footer"><span class="product-moq">MOQ: <strong>1 Carton</strong></span><span class="product-cta-link">Enquire →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ HOW WE SOURCE ═══ -->
+<section id="sourcing">
+  <div class="section-inner">
+    <span class="section-tag">Sourcing Standards</span>
+    <h2 class="section-title" style="color:#fff;">How KNSR <span class="em">Selects</span> Every SKU</h2>
+    <p class="section-lead" style="color:rgba(255,255,255,0.55);">Not every product makes it into the KNSR catalogue. We apply strict selection criteria to ensure quality, demand, and value at every level of the supply chain.</p>
+    <div class="sourcing-grid">
+      <div class="sourcing-card reveal">
+        <div class="sourcing-icon">🏭</div>
+        <h4>Direct Brand &amp; Manufacturer Relationships</h4>
+        <p>We negotiate directly with FMCG brands and manufacturers — eliminating broker layers and ensuring fair pricing for our buyers.</p>
+      </div>
+      <div class="sourcing-card reveal reveal-delay-1">
+        <div class="sourcing-icon">📋</div>
+        <h4>Quality &amp; Compliance Verification</h4>
+        <p>Every brand undergoes FSSAI compliance checks, labeling verification, and quality audits before onboarding.</p>
+      </div>
+      <div class="sourcing-card reveal reveal-delay-2">
+        <div class="sourcing-icon">📊</div>
+        <h4>Demand-Validated SKU Selection</h4>
+        <p>We only stock products with proven kirana-level demand — validated through partner network data, not just brand pitches.</p>
+      </div>
+      <div class="sourcing-card reveal reveal-delay-3">
+        <div class="sourcing-icon">🌡️</div>
+        <h4>Cold Chain &amp; Storage Standards</h4>
+        <p>Temperature-sensitive products are stored and transported through KNSR's certified cold chain network — from source to shelf.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW TO ORDER ═══ -->
+<section id="ordering">
+  <div class="section-inner">
+    <span class="section-tag">How to Order</span>
+    <h2 class="section-title">Simple B2B Ordering, <span class="em">Built for Speed</span></h2>
+    <div class="ordering-grid">
+      <div class="ordering-steps reveal">
+        <div class="order-step">
+          <div class="order-step-num">1</div>
+          <div class="order-step-text">
+            <h4>Register as a Buyer</h4>
+            <p>Create your KNSR buyer account with your GSTIN and business address. Verification takes under 2 hours.</p>
+          </div>
+        </div>
+        <div class="order-step">
+          <div class="order-step-num">2</div>
+          <div class="order-step-text">
+            <h4>Browse &amp; Select Products</h4>
+            <p>Access the full catalogue, filter by category, and add products to your B2B cart. Real-time stock visibility.</p>
+          </div>
+        </div>
+        <div class="order-step">
+          <div class="order-step-num">3</div>
+          <div class="order-step-text">
+            <h4>Place Your Order</h4>
+            <p>Checkout with your preferred payment method — UPI, NEFT, or credit terms for approved accounts.</p>
+          </div>
+        </div>
+        <div class="order-step">
+          <div class="order-step-num">4</div>
+          <div class="order-step-text">
+            <h4>Track &amp; Receive</h4>
+            <p>Live order tracking from the nearest KNSR dark store. Most orders delivered within 24–48 hours of confirmation.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ordering-visual reveal reveal-delay-1">
+        <h3>Request a Bulk Quote</h3>
+        <p class="sub">For large orders, custom SKU mixes, or institutional supply</p>
+        <div class="order-form-row"><label>Business Name</label><input type="text" placeholder="Your company name"></div>
+        <div class="order-form-row form-row-2">
+          <div><label>Contact Name</label><input type="text" placeholder="Full name"></div>
+          <div><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div>
+        </div>
+        <div class="order-form-row"><label>Category of Interest</label>
+          <select>
+            <option>Select a category</option>
+            <option>Personal Care</option>
+            <option>Packaged Foods</option>
+            <option>Home Care</option>
+            <option>HoReCa Supplies</option>
+            <option>Institutional Bulk</option>
+            <option>Regional Brands</option>
+            <option>Multiple Categories</option>
+          </select>
+        </div>
+        <div class="order-form-row"><label>Estimated Monthly Volume (₹)</label>
+          <select>
+            <option>Select range</option>
+            <option>₹50,000 – ₹2L</option>
+            <option>₹2L – ₹10L</option>
+            <option>₹10L – ₹50L</option>
+            <option>₹50L+</option>
+          </select>
+        </div>
+        <button class="btn-primary" style="width:100%; justify-content:center; margin-top:0.5rem;">Submit Enquiry ↗</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BRAND PARTNERS ═══ -->
+<section id="brands">
+  <div class="section-inner">
+    <div class="brands-intro reveal">
+      <span class="section-tag">Brand Partners</span>
+      <h2 class="section-title">200+ Brands. <span class="em">One Platform.</span></h2>
+      <p class="section-lead">KNSR works directly with national FMCG brands, regional manufacturers, and emerging challenger brands — ensuring wide choice and genuine value for every buyer.</p>
+    </div>
+    <div class="brands-grid">
+      <div class="brand-tile reveal"><div class="brand-tile-icon">🧴</div><h5>HUL Partners</h5><p>Dove, Surf, Lux &amp; more</p><span class="brand-category-badge bcb-personal">Personal Care</span></div>
+      <div class="brand-tile reveal reveal-delay-1"><div class="brand-tile-icon">🍪</div><h5>ITC &amp; Britannia</h5><p>Biscuits, snacks, dairy</p><span class="brand-category-badge bcb-food">Food</span></div>
+      <div class="brand-tile reveal reveal-delay-2"><div class="brand-tile-icon">🧺</div><h5>P&amp;G India</h5><p>Ariel, Tide, Gillette</p><span class="brand-category-badge bcb-home">Home Care</span></div>
+      <div class="brand-tile reveal reveal-delay-3"><div class="brand-tile-icon">🌾</div><h5>Marico</h5><p>Parachute, Saffola oils</p><span class="brand-category-badge bcb-fmcg">FMCG</span></div>
+      <div class="brand-tile reveal"><div class="brand-tile-icon">☕</div><h5>Tata Consumer</h5><p>Tata Tea, Tata Salt</p><span class="brand-category-badge bcb-food">Food</span></div>
+      <div class="brand-tile reveal reveal-delay-1"><div class="brand-tile-icon">🫧</div><h5>Godrej Consumer</h5><p>Cinthol, Good Knight</p><span class="brand-category-badge bcb-home">Home Care</span></div>
+      <div class="brand-tile reveal reveal-delay-2"><div class="brand-tile-icon">🍫</div><h5>Nestlé India</h5><p>Maggi, KitKat, Nescafé</p><span class="brand-category-badge bcb-food">Food</span></div>
+      <div class="brand-tile reveal reveal-delay-3"><div class="brand-tile-icon">🌿</div><h5>Dabur</h5><p>Chyawanprash, Hajmola</p><span class="brand-category-badge bcb-personal">Personal Care</span></div>
+      <div class="brand-tile reveal"><div class="brand-tile-icon">🏺</div><h5>Regional Manufacturers</h5><p>50+ curated local brands</p><span class="brand-category-badge bcb-regional">Regional</span></div>
+    </div>
+    <div style="text-align:center; margin-top:3rem;" class="reveal">
+      <p style="font-size:0.9rem; color:var(--slate); margin-bottom:1.25rem;">Are you an FMCG brand or manufacturer looking to distribute through KNSR?</p>
+      <a href="mailto:brands@knsrconsumer.com" class="btn-primary">List Your Brand on KNSR ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="reveal">Start Buying Smarter Today</h2>
+    <p class="reveal reveal-delay-1">Register as a KNSR buyer, get access to 5,000+ B2B SKUs, and start ordering from the nearest dark store node — with 24–48hr delivery, transparent pricing, and GST-compliant invoicing.</p>
+    <div class="cta-actions reveal reveal-delay-2">
+      <a href="mailto:hello@knsrconsumer.com" class="btn-dark">Register as a Buyer ↗</a>
+      <a href="partners.html" class="btn-outline-dark">Become a Partner</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo">KN<span>S</span>R</a>
+      <p>KNSR Consumer Products Pvt Ltd is India's full-stack B2B FMCG marketplace, connecting brands, distributors, and manufacturers directly to kirana stores, HoReCa operators, and institutional buyers.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="partners.html">Partner Program</a></li>
+        <li><a href="insights.html">Blog &amp; Insights</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Categories</h5>
+      <ul class="footer-links">
+        <li><a href="#">Personal Care</a></li>
+        <li><a href="#">Packaged Foods</a></li>
+        <li><a href="#">Home Care</a></li>
+        <li><a href="#">HoReCa Supplies</a></li>
+        <li><a href="#">Regional Brands</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul class="footer-links">
+        <li><a href="mailto:hello@knsrconsumer.com">hello@knsrconsumer.com</a></li>
+        <li><a href="mailto:brands@knsrconsumer.com">brands@knsrconsumer.com</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">WhatsApp Channel</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 KNSR Consumer Products Pvt Ltd. All rights reserved.</span>
+    <span>
+      <a href="#" style="margin-right:1.5rem; color:rgba(255,255,255,0.35);">Privacy Policy</a>
+      <a href="#" style="color:rgba(255,255,255,0.35);">Terms of Use</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.borderBottomColor = scrollY > 40 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)';
+  });
+
+  // Category filter
+  function filterCat(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.category-section').forEach(sec => {
+      if (cat === 'all' || sec.dataset.cat === cat) {
+        sec.style.display = '';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+  }
+</script>
+</body>
+</html>
