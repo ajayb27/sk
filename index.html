@@ -192,6 +192,11 @@
     <li><a href="insights.html">Insights</a></li>
     <li><a href="mailto:partner@knsrconsumer.com" class="nav-cta">Apply Now</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Open navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <!-- ═══ HERO ═══ -->
@@ -480,6 +485,7 @@
 </footer>
 
 <script>
+  // Reveal animation
   const revealEls = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
@@ -488,6 +494,12 @@
   window.addEventListener('scroll', () => {
     document.querySelector('nav').style.borderBottomColor = scrollY > 40 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)';
   });
+
+  // Mobile nav toggle
+  document.querySelector('.nav-toggle').onclick = function() {
+    document.querySelector('.nav-links').classList.toggle('nav-open');
+    this.classList.toggle('open');
+  };
 </script>
 </body>
 </html>

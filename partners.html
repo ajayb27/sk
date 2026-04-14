@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Partner With Us — KNSR Consumer Products</title>
-
+<title>KNSR Consumer Products — India's B2B FMCG Marketplace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
-
 <style>
 /* PAGE HERO */
 .page-hero {
@@ -122,13 +119,18 @@
 <nav>
   <a href="index.html" class="nav-logo">KN<span>S</span>R</a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html" class="active">Home</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="products.html">Products</a></li>
-    <li><a href="partner.html" class="active">Partner</a></li>
+    <li><a href="partners.html">Partner</a></li>
     <li><a href="insights.html">Insights</a></li>
     <li><a href="mailto:partner@knsrconsumer.com" class="nav-cta">Apply Now</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Open navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -214,6 +216,24 @@
 
   </div>
 </section>
+
+<script>
+  // Reveal animation
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => obs.observe(el));
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.borderBottomColor = scrollY > 40 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)';
+  });
+
+  // Mobile nav toggle
+  document.querySelector('.nav-toggle').onclick = function() {
+    document.querySelector('.nav-links').classList.toggle('nav-open');
+    this.classList.toggle('open');
+  };
+</script>
 
 </body>
 </html>

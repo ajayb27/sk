@@ -43,6 +43,79 @@ nav {
 .nav-cta { background: var(--saffron) !important; color: var(--ink) !important; padding: 0.55rem 1.4rem !important; border-radius: 100px !important; font-weight: 700 !important; font-size: 0.88rem !important; transition: background 0.2s, transform 0.15s !important; }
 .nav-cta:hover { background: var(--accent-yellow) !important; transform: scale(1.04); }
 
+/* --- MOBILE NAVIGATION --- */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 38px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 110;
+}
+.nav-toggle span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  margin: 4px 0;
+  background: #fff;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+.nav-toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 64px;
+    right: 0;
+    background: rgba(10,15,30,0.98);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.5rem;
+    padding: 2rem 5%;
+    width: 70vw;
+    max-width: 320px;
+    height: calc(100vh - 64px);
+    box-shadow: var(--shadow-lg);
+    transform: translateX(100%);
+    transition: transform 0.3s;
+    z-index: 105;
+    display: flex;
+  }
+  .nav-links.nav-open {
+    transform: translateX(0);
+  }
+  .nav-links li {
+    display: block !important;
+  }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links li:not(:last-child) { display: none; }
+}
+@media (max-width: 600px) {
+  nav { padding: 1rem 4%; }
+  .nav-links {
+    top: 56px;
+    padding: 1.5rem 6%;
+    width: 90vw;
+    max-width: 100vw;
+    height: calc(100vh - 56px);
+  }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
 /* BUTTONS */
 .btn-primary { background: var(--saffron); color: var(--ink); padding: 1rem 2.2rem; border-radius: 100px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: all 0.22s; display: inline-flex; align-items: center; gap: 0.5rem; }
 .btn-primary:hover { background: var(--accent-yellow); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(249,115,22,0.4); }
