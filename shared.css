@@ -185,6 +185,120 @@ footer { background: #060C1A; color: rgba(255,255,255,0.5); padding: 4rem 5% 2.5
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 
+
+
+
+/* --- ORIGINAL PRODUCTS PROFESSIONAL CARD STYLE --- */
+.original-products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Always two per row on desktop */
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+  .original-products-grid {
+    grid-template-columns: 1fr; /* Stack on mobile/tablet */
+  }
+}
+
+.original-product-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px 0 rgba(16, 24, 40, 0.07);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.2s;
+  border: 1px solid #f3f4f6;
+}
+
+.original-product-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(249, 115, 22, 0.13);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.op-image-wrap {
+  background: linear-gradient(135deg, #fffbe6 60%, #fff7cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+  position: relative;
+}
+
+.op-image-wrap img {
+  max-height: 110px;
+  max-width: 90%;
+  object-fit: contain;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.07));
+  border-radius: 0.5rem;
+  background: transparent;
+}
+
+.op-body {
+  padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.op-cat {
+  color: #f97316;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.op-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: #22223b;
+}
+
+.op-desc {
+  font-size: 0.98rem;
+  color: #5c5c6c;
+  margin-bottom: 1.1rem;
+  flex: 1;
+}
+
+.op-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 0.8rem;
+  font-size: 0.98rem;
+}
+
+.op-moq {
+  color: #6b7280;
+}
+
+.op-moq strong {
+  color: #22223b;
+  font-weight: 700;
+}
+
+.op-enquire {
+  color: #f97316;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.op-enquire:hover {
+  color: #b45309;
+  text-decoration: underline;
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
