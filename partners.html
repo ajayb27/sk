@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KNSR Consumer Products — India's B2B FMCG Marketplace</title>
+<title>Flash Mart Consumer Products — India's B2B FMCG Marketplace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
@@ -119,12 +119,12 @@
 <nav>
   <a href="index.html" class="nav-logo">KN<span>S</span>R</a>
   <ul class="nav-links">
-    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="index.html">Home</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="products.html">Products</a></li>
     <li><a href="partners.html">Partner</a></li>
     <li><a href="insights.html">Insights</a></li>
-    <li><a href="mailto:partner@knsrconsumer.com" class="nav-cta">Apply Now</a></li>
+    <li><a href="mailto:partner@flashmartconsumer.com" class="nav-cta">Apply Now</a></li>
   </ul>
   <button class="nav-toggle" aria-label="Open navigation">
     <span></span>
@@ -138,7 +138,7 @@
 <div class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-inner">
-    <h1>Become a <span>KNSR Partner</span></h1>
+    <h1>Become a <span>Flash Mart Partner</span></h1>
     <p>Join a fast-growing B2B FMCG network designed to help distributors, retailers, and entrepreneurs scale profitably.</p>
   </div>
 </div>
@@ -208,8 +208,8 @@
 
 <!-- CTA -->
 <div class="partner-cta">
-  <a href="mailto:partner@knsrconsumer.com" class="btn-primary">
-    Apply to Become a Partner
+  <a href="mailto:partner@flashmartconsumer.com" class="btn-primary">
+    Apply to Become an Investor
   </a>
 </div>
 ```
@@ -233,6 +233,12 @@
     document.querySelector('.nav-links').classList.toggle('nav-open');
     this.classList.toggle('open');
   };
+
+  // Active nav highlighting
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a[href]').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === currentPage);
+  });
 </script>
 
 </body>
